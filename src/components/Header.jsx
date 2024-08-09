@@ -7,7 +7,9 @@ function Header() {
         <Link to="/">
           <div className="flex items-center">
             <img src="/logoipsum-295.svg" alt="logo" className="p-1" />
-            <h1 className="text-4xl p-1 font-bold caret-gray-500">Tuesday</h1>
+            <h1 className="text-4xl p-1 font-bold caret-gray-500">
+              Tuesday<span className="font-light">.com</span>
+            </h1>
           </div>
         </Link>
         <div className="flex space-x-4">

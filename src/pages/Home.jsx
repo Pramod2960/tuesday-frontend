@@ -63,8 +63,8 @@ px-4 p-2  pb-4 w-fit text-3xl md:text-3xl drop-shadow-xl"
               </Link>
             </div>
           </div>
-          <div className="flex w-full md:w-1/2 justify-center items-center mt-auto p-10 rounded-md drop-shadow-2xl">
-            <img src="/tuesday.png" className="rouned-lg " />
+          <div className="flex w-full md:w-1/2 justify-center items-center mt-auto p-10 rounded-full drop-shadow-2xl">
+            <img src="/tuesday-gif.gif" className="rouned-full " />
           </div>
         </div>
       </div>
