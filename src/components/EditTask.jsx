@@ -1,22 +1,41 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function CreateTask() {
+export default function EditTask(props) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [status, setStatus] = useState("to-do");
-  const [dueDate, setDueDate] = useState(new Date());
+  const [status, setStatus] = useState("");
+  const [dueDate, setDueDate] = useState(null);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/board/task/${props.id}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        const task = response.data;
+        setTitle(task.title);
+        setDesc(task.desc);
+        setStatus(task.status);
+        setDueDate(task.dueDate);
+        console.error(props.id, task);
+      })
+      .catch((error) => {
+        console.error("Error fetching the task:", error, props.id);
+        toast.error("Error fetching the task.", error);
+      });
+  }, []);
+
   function handlePost() {
     axios
-      .post(
-        "http://localhost:4000/board/task",
+      .patch(
+        `http://localhost:4000/board/task/${props.id}`,
         { title, desc, status, dueDate },
         {
           withCredentials: true,
@@ -25,7 +44,7 @@ export default function CreateTask() {
       .then((response) => {
         navigate("/board");
         window.location.reload();
-        toast.success("Task has been created");
+        toast.success("Task has been Updated");
       })
       .catch((error) => {
         toast.error(`Something went wrong : ${error}`);
@@ -38,11 +57,11 @@ export default function CreateTask() {
         <label for="title" className="ml-3 flex justify-start">
           Title
         </label>
-
         <input
           className="border p-2 m-2 rounded-md w-full"
           placeholder="Add a title"
           name="title"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
@@ -53,6 +72,7 @@ export default function CreateTask() {
           className="border p-2 m-2 rounded-md w-full"
           placeholder="Desprition of the task"
           name="desc"
+          value={desc}
           onChange={(e) => setDesc(e.target.value)}
         />
 

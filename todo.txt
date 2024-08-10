@@ -1,6 +1,8 @@
-- Perform Delete operations.
 - Perform Edit operations from the card only.
 - Organise the all the details on the card in a manner.
+- Remove the default due date from createTask 
 - Apply shorting based on  `CreateAt` or DueDate` field.
 - Search features.
 - Find a way to create add more `columns` in a dynamic way.
+- Add the desc field in the schema 
+- Implement the secure route .board (if the user doesn't exit then redirect to the login page)t
