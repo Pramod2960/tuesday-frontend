@@ -3,14 +3,17 @@ import {
   ChevronDown,
   FileQuestion,
   HardDrive,
+  LogOut,
   Puzzle,
   Search,
   User,
   UserRoundPlus,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <nav
       className="bg-white h-[55px] w-full fixed z-10  flex justify-between
@@ -45,24 +48,6 @@ function Navbar() {
               <Bell className="text-green-800" />
             </button>
           </div>
-          {/* 
-          <div className="p-1">
-            <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
-              <HardDrive className="text-green-800" />
-            </button>
-          </div> */}
-
-          {/* <div className="p-1">
-            <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
-              <UserRoundPlus className="text-green-800" />
-            </button>
-          </div> */}
-
-          {/* <div className="p-1">
-            <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
-              <Puzzle className="text-green-800" />
-            </button>
-          </div> */}
 
           <div className="p-1">
             <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
@@ -70,19 +55,20 @@ function Navbar() {
             </button>
           </div>
 
-          {/* <div className="p-1">
-            <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
-              <FileQuestion className="text-green-800" />
+          <div className="p-1">
+            <button
+              onClick={() => {
+                Cookies.remove("uid-client", { path: "/" });
+                Cookies.remove("uid", { path: "/" });
+                navigate("/login");
+              }}
+              className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2"
+            >
+              <LogOut className="text-green-800" />
             </button>
-          </div> */}
+          </div>
 
           <div className=" border-l-gray-300  border-l-2 flex justify-center items-center">
-            {/* <div className="p-1">
-              <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2">
-                <ChevronDown className="text-green-800" />
-              </button>
-            </div> */}
-
             <div className="relative">
               <button className="hover:bg-gray-300 hover:bg-opacity-50 rounded-full p-2 mx-2 group">
                 <User className="text-green-800" />
@@ -97,14 +83,6 @@ function Navbar() {
                       <a href="https://react.dev/learn/react-developer-tools">
                         Setting
                       </a>
-                    </li>
-                    <li>
-                      <Link
-                        to="/login"
-                        className="py-2 text-sm hover:bg-green-100 rounded-md block"
-                      >
-                        Logout
-                      </Link>
                     </li>
                   </ul>
                 </div>

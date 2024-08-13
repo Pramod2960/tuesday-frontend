@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 function Login() {
   const [email, setEmail] = useState();
@@ -13,6 +14,9 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      return toast.error("Username and password is required");
+    }
     axios
       .post(
         "http://localhost:4000/auth/login/",
@@ -25,7 +29,7 @@ function Login() {
         }
       )
       .then((res) => {
-        console.log(`email-${email}, password- ${password}`);
+        Cookies.set("uid-client", res.data.uid);
         toast(`Welcome Back!`, {
           icon: "👏",
           style: {

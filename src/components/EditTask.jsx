@@ -68,13 +68,13 @@ export default function EditTask(props) {
         <label for="desc" className="ml-3 flex justify-start">
           Description
         </label>
-        <input
+        <textarea
           className="border p-2 m-2 rounded-md w-full"
           placeholder="Desprition of the task"
           name="desc"
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
-        />
+        ></textarea>
 
         <label for="taskStatus" className="ml-3 flex justify-start">
           Status

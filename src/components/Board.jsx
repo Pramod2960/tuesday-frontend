@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Columns from "./Columns";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Confetti from "react-confetti";
+import Cookies from "js-cookie";
+import { ArrowDownUp, ArrowUpDown } from "lucide-react";
+import { SortButton } from "./Dashboard";
 
-export default function Boards() {
+const Boards = forwardRef((props, ref) => {
   const [toDo, setToDo] = useState([]);
   const [working, setWorking] = useState([]);
   const [done, setDone] = useState([]);
-
   const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
@@ -21,6 +28,7 @@ export default function Boards() {
         const tasks = response.data;
         if (Array.isArray(tasks)) {
           setToDo(tasks.filter((task) => task.status === "to-do"));
+
           setWorking(tasks.filter((task) => task.status === "working"));
           setDone(tasks.filter((task) => task.status === "done"));
         } else {
@@ -33,6 +41,26 @@ export default function Boards() {
       });
   }, []);
 
+  //sorting
+  const handleSort = () => {
+    setToDo((prevToDo) =>
+      [...prevToDo].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+    );
+    setWorking((prevWorking) =>
+      [...prevWorking].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+    );
+    setDone((prevDone) =>
+      [...prevDone].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+    );
+
+    toast.success("Sorted by Due Date");
+  };
+
+  useImperativeHandle(ref, () => ({
+    handleSort,
+  }));
+
+  //Draging functionality
   const handleDragEnd = (result) => {
     const { destination, source, draggableId } = result;
 
@@ -165,9 +193,10 @@ export default function Boards() {
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       )}
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <h2 className="text-center">Board</h2>
 
+      {/* <SortButton onSort={handleSort} /> */}
+
+      <DragDropContext onDragEnd={handleDragEnd}>
         <div className="flex gap-10 mx-5 justify-between items-center">
           <Columns title={"To Do"} tasks={toDo} id={"1"} />
           <Columns title={"Working"} tasks={working} id={"2"} />
@@ -176,4 +205,6 @@ export default function Boards() {
       </DragDropContext>
     </>
   );
-}
+});
+
+export default Boards;
