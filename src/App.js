@@ -6,6 +6,7 @@ import Board from "./pages/Board";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
+import PageNotFound from "./pages/pageNotFount";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/board" element={<UserPage />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

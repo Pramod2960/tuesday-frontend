@@ -8,11 +8,13 @@
 - Apply the log_out functionality
 - Enhance the `New Task` button, + symbol
 - Change the add text filed to input -> `field` for multiple box
+- Apply sorting based on  `CreateAt` or DueDate` field.
+- Add the desc field in the schema 
  
 ************** TO DO *************
 
-- Apply sorting based on  `CreateAt` or DueDate` field.
+- Add priortiy feature
+- Apply 404 page not found
 - Find a way to create add more `columns` in a dynamic way.
-- Add the desc field in the schema 
 
 
