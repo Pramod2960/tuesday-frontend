@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { format } from "date-fns";
 
 export default function Comments(props) {
   const [comments, setComment] = useState([]);
   const [newComment, setNewComment] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -23,7 +24,7 @@ export default function Comments(props) {
         console.error("Error fetching the task:", error, props.id);
         toast.error("Error fetching the task.");
       });
-  }, []);
+  }, [comments]);
 
   function handlePost() {
     axios
@@ -37,7 +38,7 @@ export default function Comments(props) {
       .then((response) => {
         setComment([...comments, newComment]);
         setNewComment("");
-        // navigate("/board");
+        navigate("/board");
         // window.location.reload();
         toast.success("comment has been added");
       })
@@ -52,8 +53,7 @@ export default function Comments(props) {
         withCredentials: true,
       })
       .then((response) => {
-        // navigate("/board");
-
+        navigate("/board");
         toast.success("Comment has been deleted");
       })
       .catch((error) => {
@@ -65,14 +65,14 @@ export default function Comments(props) {
     <>
       <div>
         <label htmlFor="comments">Comments</label>
-        <input
+        <textarea
           type="text"
           name="comments"
           placeholder="Add a comment"
           className="border p-2 m-2 rounded-md w-full"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-        />
+        ></textarea>
       </div>
       <div>
         <button
@@ -83,13 +83,15 @@ export default function Comments(props) {
         </button>
       </div>
       <div>
-        <ul>
+        <ul className="flex flex-col gap-2">
           {comments.map((comment, index) => (
             <li
               key={index}
-              className="flex align-left items-center justify-between"
+              className=" border p-2 rounded-lg flex gap-2 align-left items-center justify-between"
             >
-              {comment}
+              <div className="flex flex-col">
+                <span>{comment}</span>
+              </div>
 
               <div>
                 <button

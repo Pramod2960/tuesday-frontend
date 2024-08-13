@@ -9,9 +9,6 @@ import Columns from "./Columns";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Confetti from "react-confetti";
-import Cookies from "js-cookie";
-import { ArrowDownUp, ArrowUpDown } from "lucide-react";
-import { SortButton } from "./Dashboard";
 
 const Boards = forwardRef((props, ref) => {
   const [toDo, setToDo] = useState([]);
@@ -28,7 +25,6 @@ const Boards = forwardRef((props, ref) => {
         const tasks = response.data;
         if (Array.isArray(tasks)) {
           setToDo(tasks.filter((task) => task.status === "to-do"));
-
           setWorking(tasks.filter((task) => task.status === "working"));
           setDone(tasks.filter((task) => task.status === "done"));
         } else {
@@ -36,10 +32,9 @@ const Boards = forwardRef((props, ref) => {
         }
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
         toast.error("Error in featching data, Please try later");
       });
-  }, []);
+  }, [setToDo, setWorking, setDone]);
 
   //sorting
   const handleSort = () => {
@@ -52,7 +47,6 @@ const Boards = forwardRef((props, ref) => {
     setDone((prevDone) =>
       [...prevDone].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     );
-
     toast.success("Sorted by Due Date");
   };
 

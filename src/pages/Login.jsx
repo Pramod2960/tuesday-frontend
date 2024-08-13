@@ -29,20 +29,9 @@ function Login() {
         }
       )
       .then((res) => {
-        Cookies.set("uid-client", res.data.uid);
-        toast(`Welcome Back!`, {
-          icon: "👏",
-          style: {
-            borderRadius: "10px",
-            background: "#333",
-            color: "#fff",
-          },
-        });
         navigate("/board");
-        console.log(res);
       })
       .catch((err) => {
-        console.log(err);
         toast.error("wrong password or username");
       });
   };

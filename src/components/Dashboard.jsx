@@ -13,7 +13,7 @@ function Dashboard() {
 
   const handleSortClick = () => {
     if (boardRef.current) {
-      boardRef.current.handleSort(); // Call the handleSort function in Board
+      boardRef.current.handleSort();
     }
   };
 

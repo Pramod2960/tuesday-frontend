@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Task from "./Task";
 
-export default function Columns({ title, tasks, id, count }) {
+export default function Columns({ title, tasks, id }) {
   const [taskCount, setTaskCount] = useState(null);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function Columns({ title, tasks, id, count }) {
   }, [tasks]);
 
   return (
-    <div className="bg-slate-100 rounded-md  min-w-[100px] w-full h-[450px] overflow-y-auto  ">
+    <div className="bg-slate-100 rounded-md  min-w-[100px] w-full h-[80vh] overflow-y-auto  ">
       <h2 className="p-2 z-1 bg-gray-700 flex justify-center items-center  text-white text-center sticky top-0">
         {title}
         <span className="ml-2 bg-rose-800 rounded-full font-semibold w-6 h-6 flex items-center justify-center text-white">

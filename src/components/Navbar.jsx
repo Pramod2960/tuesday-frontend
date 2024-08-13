@@ -11,9 +11,24 @@ import {
 } from "lucide-react";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 function Navbar() {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    axios
+      .post("http://localhost:4000/auth/logout", {}, { withCredentials: true })
+      .then(() => {
+        navigate("/login");
+        toast.success("logout successful");
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
+  };
+
   return (
     <nav
       className="bg-white h-[55px] w-full fixed z-10  flex justify-between
@@ -57,11 +72,7 @@ function Navbar() {
 
           <div className="p-1">
             <button
-              onClick={() => {
-                Cookies.remove("uid-client", { path: "/" });
-                Cookies.remove("uid", { path: "/" });
-                navigate("/login");
-              }}
+              onClick={handleLogout}
               className="hover:bg-gray-300 hover:bg-opacity-50 rounded-md p-2"
             >
               <LogOut className="text-green-800" />

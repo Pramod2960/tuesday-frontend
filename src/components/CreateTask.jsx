@@ -39,7 +39,7 @@ export default function CreateTask() {
     <>
       <form action="">
         <div className="w-full">
-          <label for="title" className="ml-3 flex justify-start">
+          <label htmlFor="title" className="ml-3 flex justify-start">
             Title
           </label>
 
@@ -50,30 +50,30 @@ export default function CreateTask() {
             onChange={(e) => setTitle(e.target.value)}
           />
 
-          <label for="desc" className="ml-3 flex justify-start">
+          <label htmlFor="desc" className="ml-3 flex justify-start">
             Description
           </label>
           <textarea
             className="border p-2 m-2 rounded-md w-full"
-            placeholder="Desprition of the task"
+            placeholder="Description of the task"
             name="desc"
             onChange={(e) => setDesc(e.target.value)}
           ></textarea>
 
-          <label for="taskStatus" className="ml-3 flex justify-start">
+          <label htmlFor="taskStatus" className="ml-3 flex justify-start">
             Status
           </label>
           <select
             id="taskStatus"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="border w-full  m-2 border-gray-300 rounded p-2"
+            className="border w-full m-2 border-gray-300 rounded p-2"
           >
             <option value="to-do">To Do</option>
             <option value="working">Working</option>
           </select>
 
-          <label for="taskStatus" className="ml-3 flex justify-start">
+          <label htmlFor="taskStatus" className="ml-3 flex justify-start">
             Due Date
           </label>
           <div className="flex justify-start w-full">
@@ -81,15 +81,15 @@ export default function CreateTask() {
               selected={dueDate}
               onChange={(date) => setDueDate(date)}
               dateFormat="yyyy/MM/dd"
-              className="border m-2 p-2 rounded-mdnw-full"
+              className="border m-2 p-2 rounded-md nw-full"
             />
           </div>
         </div>
 
         <button
           onClick={handlePost}
-          type="submit"
-          className="p-2 m-2 w-full  bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          type="button"
+          className="p-2 m-2 w-full bg-blue-500 text-white rounded-md hover:bg-blue-600"
         >
           Submit
         </button>

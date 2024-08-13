@@ -14,7 +14,7 @@ export default function Task({ task, index }) {
   //for turncate the text
   const [showFullText, setShowFullText] = useState(false);
   const words = task.desc.split(" ");
-  const truncatedText = words.slice(0, 30).join(" ");
+  const truncatedText = words.slice(0, 10).join(" ");
   //...
 
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function Task({ task, index }) {
       })
       .then((response) => {
         navigate("/board");
-        toast.success("Task has been Delete");
+        toast.success("Task has been Deleted.");
       })
       .catch((error) => {
         toast.error("Something went wrong", error);
@@ -71,18 +71,18 @@ export default function Task({ task, index }) {
             >
               {/* TEXT FILED */}
 
-              <div className="text-left font-semibold text-xl">
+              <div className="text-left capitalize font-semibold text-lg">
                 {task.title}
               </div>
 
               <div className="text-left ">
                 {showFullText ? task.desc : truncatedText}
-                {words.length > 30 && (
+                {words.length > 10 && (
                   <span
                     onClick={() => setShowFullText(!showFullText)}
-                    className="text-red-400  font-semibold cursor-pointer ml-2"
+                    className="text-white underline  font-semibold cursor-pointer ml-2"
                   >
-                    {showFullText ? "Read Less ^" : "Read More... "}
+                    {showFullText ? "Read Less" : "Read More... "}
                   </span>
                 )}
               </div>
@@ -95,9 +95,7 @@ export default function Task({ task, index }) {
                 <div>
                   <button
                     className="mt-1 p-2 text-white  hover:text-rose-600 hover:bg-white rounded-full  "
-                    onClick={() => {
-                      handleDelete(task._id);
-                    }}
+                    onClick={() => handleDelete(task._id)}
                   >
                     <Trash2 height={20} width={20} />
                   </button>
@@ -158,7 +156,6 @@ export default function Task({ task, index }) {
                 </div>
               </div>
             </div>
-
             {provided.placeholder}
           </div>
         )}
