@@ -10,11 +10,12 @@
 - Change the add text filed to input -> `field` for multiple box
 - Apply sorting based on  `CreateAt` or DueDate` field.
 - Add the desc field in the schema 
- 
+- Apply 404 page not .
+
 ************** TO DO *************
 
 - Add priortiy feature
-- Apply 404 page not found
+- Warning box before deletion the task
 - Find a way to create add more `columns` in a dynamic way.
 
 

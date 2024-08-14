@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import Confetti from "react-confetti";
 
 const Boards = forwardRef((props, ref) => {
+  const [tasks, setTasks] = useState();
   const [toDo, setToDo] = useState([]);
   const [working, setWorking] = useState([]);
   const [done, setDone] = useState([]);
@@ -22,11 +23,22 @@ const Boards = forwardRef((props, ref) => {
         withCredentials: true,
       })
       .then((response) => {
+        setTasks(response.data);
         const tasks = response.data;
         if (Array.isArray(tasks)) {
-          setToDo(tasks.filter((task) => task.status === "to-do"));
-          setWorking(tasks.filter((task) => task.status === "working"));
-          setDone(tasks.filter((task) => task.status === "done"));
+          const sortByPriority = (tasks) => {
+            return tasks.sort((a, b) => b.priority - a.priority);
+          };
+
+          setToDo(
+            sortByPriority(tasks.filter((task) => task.status === "to-do"))
+          );
+          setWorking(
+            sortByPriority(tasks.filter((task) => task.status === "working"))
+          );
+          setDone(
+            sortByPriority(tasks.filter((task) => task.status === "done"))
+          );
         } else {
           console.error("Expected an array but got:", tasks);
         }
@@ -34,9 +46,11 @@ const Boards = forwardRef((props, ref) => {
       .catch((error) => {
         toast.error("Error in featching data, Please try later");
       });
-  }, [setToDo, setWorking, setDone]);
+  }, [setToDo, setWorking, setDone, toDo, working, done]);
 
-  //sorting
+  //sorting based on priority
+
+  //sorting by Due Date
   const handleSort = () => {
     setToDo((prevToDo) =>
       [...prevToDo].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))

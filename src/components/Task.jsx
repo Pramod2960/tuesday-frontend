@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { Edit2, MessageCircle, Trash2 } from "lucide-react";
+import { Edit2, MessageCircle, Star, Trash2 } from "lucide-react";
 import { ReactDialogBox } from "react-js-dialog-box";
 import "react-js-dialog-box/dist/index.css";
 import EditTask from "./EditTask.jsx";
@@ -39,6 +39,27 @@ export default function Task({ task, index }) {
       })
       .catch((error) => {
         toast.error("Something went wrong", error);
+      });
+  }
+
+  function handlePriority(id, priority) {
+    console.log("handlePriortyclicked", id, priority);
+
+    axios
+      .patch(
+        `http://localhost:4000/board/task/priority/${id}`,
+        { priority },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        navigate("/board");
+        toast.success("Priority has been set");
+      })
+      .catch((error) => {
+        console.error("Error setting priority:", error);
+        toast.error("Something went wrong");
       });
   }
 
@@ -92,6 +113,26 @@ export default function Task({ task, index }) {
                 {format(new Date(task.dueDate), "d MMMM yyyy")}
               </div>
               <div className="flex justify-center items-center">
+                <div>
+                  <button
+                    className="mt-1 p-2 text-white  hover:text-yellow-500 hover:bg-white rounded-full   
+                    "
+                    onClick={() => {
+                      if (task.priority === "-1") handlePriority(task._id, 1);
+                      else handlePriority(task._id, -1);
+                    }}
+                  >
+                    <Star
+                      height={20}
+                      width={20}
+                      className={
+                        task.priority === "1"
+                          ? "fill-yellow-500  text-yellow-500 b-none"
+                          : "text-current"
+                      }
+                    />
+                  </button>
+                </div>
                 <div>
                   <button
                     className="mt-1 p-2 text-white  hover:text-rose-600 hover:bg-white rounded-full  "
