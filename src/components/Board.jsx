@@ -46,7 +46,7 @@ const Boards = forwardRef((props, ref) => {
       .catch((error) => {
         toast.error("Error in featching data, Please try later");
       });
-  }, [setToDo, setWorking, setDone, toDo, working, done]);
+  }, [tasks]);
 
   //sorting based on priority
 
